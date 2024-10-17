@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('drivetrain_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->string('title', 100);
-            $table->text('description');
-            $table->string('media_path');
-            $table->boolean('visible');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('drivetrain_types');
     }
 };

@@ -28,7 +28,7 @@
                 <td>{{ $post->description }}</td>
                 <td>{{ $post->user_id }}</td>
                 <td>{{ $post->media_path }}</td>
-                <td>{{ $post->visible }}</td>
+                <td>{{ $post->visibility }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>{{ $post->updated_at }}</td>
             </tr>
