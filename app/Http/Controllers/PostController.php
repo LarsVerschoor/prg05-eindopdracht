@@ -28,18 +28,29 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $post = new Post();
+        $post->user_id = $request->user()->id;
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->media_path = '/test';
+        $post->save();
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
         $post = Post::all()->find($id);
-        return view('posts.show', compact('post'));
+
+        if ($post === null) {
+            abort(404);
+        } else {
+            $role = $request->user()->role;
+            return view('posts.show', compact('post', 'role'));
+        }
     }
 
     /**
@@ -63,6 +74,12 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::find($id);
+        if ($post === null) {
+            abort(404);
+        } else {
+            $post->delete();
+            return redirect()->route('posts.index')->with('success', 'Post ' . $post->id . ' deleted successfully');
+        }
     }
 }

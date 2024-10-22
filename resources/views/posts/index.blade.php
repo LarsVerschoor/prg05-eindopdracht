@@ -17,6 +17,9 @@
         </tr>
         </thead>
         <tbody>
+        @if(session()->has('success'))
+            <p class="success">{{session()->get('success')}}</p>
+        @endif
         @foreach($posts as $post)
             <tr>
                 <td>{{ $post->title }}</td>
@@ -25,6 +28,7 @@
         @endforeach
         </tbody>
     </table>
+    <a href="{{route('posts.create')}}">Create new post</a>
 </main>
 </body>
 </html>

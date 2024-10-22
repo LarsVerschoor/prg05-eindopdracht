@@ -20,6 +20,7 @@
             <th>visible</th>
             <th>created at</th>
             <th>updated at</th>
+            <th>admin delete</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,15 @@
                 <td>{{ $post->visibility }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>{{ $post->updated_at }}</td>
+                @if ($role === 1)
+                <td>
+                    <form action="{{route('posts.destroy', $post->id)}}" method="post">
+                        @csrf
+                        @method("delete")
+                        <button type="submit">Delete post</button>
+                    </form>
+                </td>
+                @endif
             </tr>
         </tbody>
     </table>
