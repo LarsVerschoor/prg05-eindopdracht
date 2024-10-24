@@ -33,7 +33,9 @@ class PostController extends Controller
         $post->user_id = $request->user()->id;
         $post->title = $request->title;
         $post->description = $request->description;
-        $post->media_path = '/test';
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->storeAs('post_images', $imageName, 'public');
+        $post->media_path = $imageName;
         $post->save();
         return redirect()->route('posts.show', $post->id);
     }
@@ -44,12 +46,13 @@ class PostController extends Controller
     public function show(string $id, Request $request)
     {
         $post = Post::all()->find($id);
+        $user_id = $request->user()->id;
 
         if ($post === null) {
             abort(404);
         } else {
             $role = $request->user()->role;
-            return view('posts.show', compact('post', 'role'));
+            return view('posts.show', compact('post', 'role', 'user_id'));
         }
     }
 
@@ -58,7 +61,7 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('posts.edit', compact('id'));
     }
 
     /**
@@ -72,12 +75,16 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
         $post = Post::find($id);
+        $user = $request->user()->id;
+
         if ($post === null) {
             abort(404);
-        } else {
+        } else if ($post->user_id !== $user->id && $user->role !== 1) {
+            abort(403);
+        }  else {
             $post->delete();
             return redirect()->route('posts.index')->with('success', 'Post ' . $post->id . ' deleted successfully');
         }

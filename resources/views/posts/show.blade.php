@@ -1,14 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<main>
+<x-app-layout>
 <a href="{{ route('posts.index') }}">Back</a>
     <table>
         <thead>
@@ -28,11 +18,16 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->description }}</td>
                 <td>{{ $post->user_id }}</td>
-                <td>{{ $post->media_path }}</td>
+                <td><img src="{{ asset('storage/post_images/' . $post->media_path) }}" alt="image"></td>
                 <td>{{ $post->visibility }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>{{ $post->updated_at }}</td>
-                @if ($role === 1)
+                @if ($post->user_id === $user_id)
+                    <td>
+                        <a href="{{route('posts.edit', $post->id)}}">Edit post</a>
+                    </td>
+                @endif
+                @if ($post->user_id === $user_id || $role === 1)
                 <td>
                     <form action="{{route('posts.destroy', $post->id)}}" method="post">
                         @csrf
@@ -44,6 +39,4 @@
             </tr>
         </tbody>
     </table>
-</main>
-</body>
-</html>
+</x-app-layout>
