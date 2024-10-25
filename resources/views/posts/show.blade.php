@@ -18,7 +18,7 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->description }}</td>
                 <td>{{ $post->user_id }}</td>
-                <td><img src="{{ asset('storage/post_images/' . $post->media_path) }}" alt="image"></td>
+                <td><img src="{{ route('posts.images.show', $post->id) }}" alt="image"></td>
                 <td>{{ $post->visibility }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>{{ $post->updated_at }}</td>

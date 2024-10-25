@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -34,7 +35,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
         $imageName = time().'.'.$request->image->extension();
-        $request->image->storeAs('post_images', $imageName, 'public');
+        Storage::disk('local')->putFileAs('private/post_images', $request->image, $imageName);
         $post->media_path = $imageName;
         $post->save();
         return redirect()->route('posts.show', $post->id);
@@ -88,5 +89,21 @@ class PostController extends Controller
             $post->delete();
             return redirect()->route('posts.index')->with('success', 'Post ' . $post->id . ' deleted successfully');
         }
+    }
+
+    public function showImage(string $id)
+    {
+        $post = Post::find($id);
+        $filename = $post->media_path;
+        $path = 'private/post_images/' . $filename;
+
+        if (!Storage::disk('local')->exists($path)) {
+            abort(404);
+        }
+
+        $file = Storage::disk('local')->get($path);
+        $mimeType = Storage::mimeType($path);
+
+        return response($file, 200)->header('Content-Type', $mimeType);
     }
 }
