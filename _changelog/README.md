@@ -1,5 +1,15 @@
 # ChangeLog
 
+## 25-10-2024 Vrijdag
+
+Ik heb vandaag een aantal fixes en updates gemaakt aan het post foto upload systeem, waaronder een controller method voor het ophalen van de post foto's.
+
+Ik heb vandaag ook een logo gemaakt in figma en deze toegevoegd aan de navigatie.
+
+Ik heb ook de css voor de navigatie geschreven.
+
+<img src="./images/logo_figma.png">
+
 ## 24-10-2024 Donderdag
 
 Ik heb vandaag de file uploads gemaakt voor de foto's die bij posts worden geupload.

@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('user')->with('likes')->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -95,6 +95,11 @@ class PostController extends Controller
     public function showImage(string $id)
     {
         $post = Post::find($id);
+
+        if ($post === null) {
+            abort(404);
+        }
+
         $filename = $post->media_path;
         $path = 'post_images/' . $filename;
 
