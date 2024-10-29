@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 28-10-2024 Maandag
+
+Ik heb vandaag de frontend gemaakt voor de posts pagina's, en een aantal icoontjes gemaakt voor het liken en commenten.
+
+<img src="images/frontend_posts.png">
+
 ## 25-10-2024 Vrijdag
 
 Ik heb vandaag een aantal fixes en updates gemaakt aan het post foto upload systeem, waaronder een controller method voor het ophalen van de post foto's.

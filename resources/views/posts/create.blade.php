@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <a href="{{ route('posts.index') }}">Back</a>
     <h2>Create a new post</h2>
     <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
@@ -19,4 +20,4 @@
             <input type="submit" name="submit" value="post">
         </div>
     </form>
-</x-app-layout>
+@endsection
