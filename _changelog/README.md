@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 29-10-2024 Dinsdag
+
+Ik heb vandaag het like systeem gemaakt (create, read, delete)
+
+<img src="images/likes.png">
+
 ## 28-10-2024 Maandag
 
 Ik heb vandaag de frontend gemaakt voor de posts pagina's, en een aantal icoontjes gemaakt voor het liken en commenten.
