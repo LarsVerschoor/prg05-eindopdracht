@@ -2,8 +2,9 @@
 
 ## 31-10-2024 Donderdag
 
-Ik heb vandaag het cars tag systeem afgemaakt
+Ik heb vandaag het cars (tag) systeem afgemaakt
 Ik heb vandaag de cars admin index pagina gemaakt
+Ik heb de functionaliteit om posts te editen toegevoegd
 
 ## 30-10-2024 Woensdag
 
