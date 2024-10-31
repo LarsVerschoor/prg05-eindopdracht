@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
@@ -24,7 +25,7 @@ class Post extends Model
         return $this->hasMany(PostLike::class);
     }
 
-    public function cars(): HasMany {
-        return $this->hasMany(Car::class);
+    public function cars(): BelongsToMany {
+        return $this->belongsToMany(Car::class, 'post_car');
     }
 }

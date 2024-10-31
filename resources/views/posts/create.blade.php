@@ -1,9 +1,14 @@
 @extends('layouts.app')
 @section('content')
-    <a href="{{ route('posts.index') }}">Back</a>
     <h2>Create a new post</h2>
-    <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data" class="create-post">
         @csrf
+        @if(session()->has('error'))
+            <div class="error">{{session()->get('error')}}</div>
+        @endif
+        @if(session()->has('success'))
+            <div class="success">{{session()->get('success')}}</div>
+        @endif
         <div class="form-row">
             <label for="title">Title</label>
             <input type="text" id="title" name="title">

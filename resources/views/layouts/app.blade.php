@@ -19,23 +19,30 @@
                 <img src="{{ Vite::asset('resources/images/logo_dark_background.svg') }}" alt="GT-Gallery logo." class="nav__logo">
             </a>
 
+            @if(Auth::user()->role === 1)
+                <a class="nav__row" href="{{route('admin.index')}}" {{request()->routeIs('admin.index') ? 'data-current' : ''}}>
+                    <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_profile_white_'. ((request()->routeIs('admin.index')) ? 'bold' : 'default') .'.svg') }}" alt="home icon">
+                    <div class="nav__title">Admin</div>
+                </a>
+            @endif
+
             <a class="nav__row" href="{{route('posts.index')}}" {{(request()->routeIs('posts.index') || request()->routeIs('posts.show')) ? 'data-current' : ''}}>
-                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_home_white_'. ((request()->routeIs('posts.index') || request()->routeIs('posts.show')) ? 'bold' : 'default') .'.svg') }}" alt="create a new post.">
+                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_home_white_'. ((request()->routeIs('posts.index') || request()->routeIs('posts.show')) ? 'bold' : 'default') .'.svg') }}" alt="home icon">
                 <div class="nav__title">Home</div>
             </a>
 
             <a class="nav__row" href="{{route('posts.create')}}" {{request()->routeIs('posts.create') ? 'data-current' : ''}}>
-                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_post_white_' . (request()->routeIs('posts.create') ? 'bold' : 'default') . '.svg') }}" alt="create a new post.">
+                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_post_white_' . (request()->routeIs('posts.create') ? 'bold' : 'default') . '.svg') }}" alt="create post icon">
                 <div class="nav__title">Create Post</div>
             </a>
 
             <a class="nav__row" href="">
-                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_search_white_default.svg') }}" alt="create a new post.">
+                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_search_white_default.svg') }}" alt="search icon">
                 <div class="nav__title">Search</div>
             </a>
 
             <a class="nav__row" href="">
-                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_profile_white_default.svg') }}" alt="create a new post.">
+                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_profile_white_default.svg') }}" alt="profile icon">
                 <div class="nav__title">Profile</div>
             </a>
 

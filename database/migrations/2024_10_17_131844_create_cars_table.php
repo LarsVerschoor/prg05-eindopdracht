@@ -13,20 +13,20 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('manufacturer_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('group_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('drivetrain_type_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('aspiration_type_id')->constrained()->cascadeOnDelete();
+//            $table->foreignId('manufacturer_id')->nullable()->constrained()->cascadeOnDelete();
+//            $table->foreignId('group_id')->nullable()->constrained()->cascadeOnDelete();
+//            $table->foreignId('drivetrain_type_id')->nullable()->constrained()->cascadeOnDelete();
+//            $table->foreignId('aspiration_type_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('description');
-            $table->string('picture_path');
-            $table->year('production_year');
-            $table->string('price_credits');
-            $table->string('engine_name');
-            $table->smallInteger('weight_kg');
-            $table->smallInteger('power_bhp');
-            $table->smallInteger('torque_kgfm');
-            $table->smallInteger('displacement_cc');
+//            $table->string('description')->nullable();
+//            $table->string('picture_path')->nullable();
+//            $table->year('production_year')->nullable();
+//            $table->string('price_credits')->nullable();
+//            $table->string('engine_name')->nullable();
+//            $table->smallInteger('weight_kg')->nullable();
+//            $table->smallInteger('power_bhp')->nullable();
+//            $table->smallInteger('torque_kgfm')->nullable();
+//            $table->smallInteger('displacement_cc')->nullable();
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $posts = Post::with(['user', 'likes'])->get()->map(function ($post) use ($userId) {
+        $posts = Post::with(['user', 'likes', 'cars'])->latest('posts.created_at')->get()->map(function ($post) use ($userId) {
             $post->liked = $post->likes->contains('user_id', $userId);
             return $post;
         });
@@ -38,6 +38,10 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+        $userLikes = PostLike::where('user_id', $request->user()->id)->get()->count();
+        if ($userLikes < 3 && $request->user()->role === 0) {
+            return redirect()->route('posts.create')->with('error', 'You need to have liked at least 3 posts before you can create posts');
+        }
         $post = new Post();
         $post->user_id = $request->user()->id;
         $post->title = $request->title;
@@ -153,5 +157,21 @@ class PostController extends Controller
         } else {
             return response()->json(['message' => 'Like not found.', 'liked' => '0'], 404);
         }
+    }
+
+    public function adminIndex(Request $request) {
+
+        if ($request->user()->role === 0) {
+            abort(403);
+        }
+
+        $userId = $request->user()->id;
+
+        $posts = Post::with(['user', 'likes', 'cars'])->latest('posts.created_at')->get()->map(function ($post) use ($userId) {
+            $post->liked = $post->likes->contains('user_id', $userId);
+            return $post;
+        });
+
+        return view('posts.admin.index', compact('posts'));
     }
 }
