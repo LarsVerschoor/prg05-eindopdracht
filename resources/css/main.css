@@ -87,6 +87,7 @@ nav {
     gap: 1rem;
     padding: 1rem 4rem;
     width: 100%;
+    cursor: pointer;
 }
 
 .nav__row[data-current] > .nav__title {
@@ -166,8 +167,7 @@ main {
     color: #fff;
 }
 
-.post-preview__view-profile {
-    color: #fff;
+.post-preview__delete-post {
     margin-left: auto;
 }
 
@@ -224,11 +224,12 @@ main {
 
 .create-post label {
     color: #fff;
-    width: 14ch;
+    width: 16ch;
     display: block;
 }
 
-.create-post input:not(input[type='submit']) {
+.create-post input:not(input[type='submit']),
+select {
     background-color: #1e1e1e;
     border: 1px solid #4c4c4c;
     padding: .6rem 1rem;

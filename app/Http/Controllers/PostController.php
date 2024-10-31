@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Post;
 use App\Models\PostLike;
 use Illuminate\Http\Request;
@@ -31,7 +32,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $cars = Car::all();
+
+        return view('posts.create', compact('cars'));
     }
 
     /**
@@ -49,6 +52,11 @@ class PostController extends Controller
         $imageName = Str::uuid().'.'.$request->image->extension();
         Storage::disk('local')->putFileAs('post_images', $request->image, $imageName);
         $post->media_path = $imageName;
+        if ($request->has('cars')) {
+            foreach ($request->cars as $car) {
+                $post->cars()->attach($car);
+            }
+        }
         $post->save();
         return redirect()->route('posts.show', $post->id);
     }
@@ -72,9 +80,19 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, Request $request)
     {
-        return view('posts.edit', compact('id'));
+        $post = Post::with('user', 'cars')->find($id);
+        if ($post === null) {
+            abort(404);
+        }
+        if ($post->user->id !== $request->user()->id) {
+            abort(403);
+        }
+
+        $cars = Car::with('posts')->get();
+
+        return view('posts.edit', compact('post', 'cars'));
     }
 
     /**
@@ -82,7 +100,31 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::with('user', 'cars')->find($id);
+        if ($post === null) {
+            abort(404);
+        }
+        if ($post->user->id !== $request->user()->id) {
+            abort(403);
+        }
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = Str::uuid().'.'.$request->image->extension();
+        }
+        if ($imageName !== null) {
+            Storage::disk('local')->delete($post->media_path);
+            Storage::disk('local')->putFileAs('post_images', $request->image, $imageName);
+            $post->media_path = $imageName;
+        }
+        if ($request->has('cars')) {
+            $post->cars()->sync($request->cars);
+        } else {
+            $post->cars()->detach();
+        }
+        $post->save();
+        return redirect()->route('posts.show', $post->id)->with('success', 'Post' . $post->id . 'updated successfully');
     }
 
     /**

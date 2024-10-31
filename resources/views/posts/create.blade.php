@@ -22,6 +22,14 @@
             <input type="file" id="image" name="image">
         </div>
         <div class="form-row">
+            <label for="cars">Cars</label>
+            <select multiple name="cars[]" id="cars">
+                @foreach($cars as $car)
+                    <option value="{{$car->id}}">{{$car->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-row">
             <input type="submit" name="submit" value="post">
         </div>
     </form>

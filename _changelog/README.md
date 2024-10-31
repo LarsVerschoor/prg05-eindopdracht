@@ -1,5 +1,15 @@
 # ChangeLog
 
+## 31-10-2024 Donderdag
+
+Ik heb vandaag het cars tag systeem afgemaakt
+Ik heb vandaag de cars admin index pagina gemaakt
+
+## 30-10-2024 Woensdag
+
+Ik heb vandaag het admin dashboard gemaakt
+Ik heb vandaag begonnen aan het cars tag systeem
+
 ## 29-10-2024 Dinsdag
 
 Ik heb vandaag het like systeem gemaakt (create, read, delete)

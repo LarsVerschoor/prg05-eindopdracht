@@ -2,7 +2,12 @@
     <div class="post-preview__head">
         <img src="{{Vite::asset('resources/images/icon_profile_white_default.svg')}}" alt="profile picture" class="post-preview__profile-picture">
         <div class="post-preview__username">{{$post->user->name}}</div>
-        <a href="" class="post-preview__view-profile">View profile</a>
+        @if($post->user->id === Auth::user()->id || Auth::user()->role === 1)
+            <form class="post-preview__delete-post" method="post" action="{{route('posts.destroy', $post->id)}}">@csrf @method('DELETE')<button type="submit" >Delete post</button></form>
+        @endif
+        @if($post->user->id === Auth::user()->id)
+        <a href="{{route('posts.edit', $post->id)}}" >Edit your post</a>
+        @endif
     </div>
     <div class="post-preview__image-container">
         <img src="{{route('posts.images.show', $post->id)}}" alt="The image attached to this post." class="post-preview__image">
