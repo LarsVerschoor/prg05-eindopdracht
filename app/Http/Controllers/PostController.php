@@ -41,6 +41,13 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cars' => 'array'
+        ]);
+
         $userLikes = PostLike::where('user_id', $request->user()->id)->get()->count();
         if ($userLikes < 3 && $request->user()->role === 0) {
             return redirect()->route('posts.create')->with('error', 'You need to have liked at least 3 posts before you can create posts');
@@ -140,6 +147,7 @@ class PostController extends Controller
         } else if ($post->user_id !== $user->id && $user->role !== 1) {
             abort(403);
         }  else {
+            Storage::disk('local')->delete($post->media_path);
             $post->delete();
             return redirect()->route('posts.index')->with('success', 'Post ' . $post->id . ' deleted successfully');
         }
