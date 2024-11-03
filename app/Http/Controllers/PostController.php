@@ -52,12 +52,12 @@ class PostController extends Controller
         $imageName = Str::uuid().'.'.$request->image->extension();
         Storage::disk('local')->putFileAs('post_images', $request->image, $imageName);
         $post->media_path = $imageName;
+        $post->save();
         if ($request->has('cars')) {
             foreach ($request->cars as $car) {
                 $post->cars()->attach($car);
             }
         }
-        $post->save();
         return redirect()->route('posts.show', $post->id);
     }
 

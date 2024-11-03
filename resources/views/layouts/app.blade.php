@@ -41,11 +41,6 @@
                 <div class="nav__title">Search</div>
             </a>
 
-            <a class="nav__row" href="">
-                <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_profile_white_default.svg') }}" alt="profile icon">
-                <div class="nav__title">Profile</div>
-            </a>
-
             <form class="nav__row" action="{{route('logout')}}" onclick="this.submit()" method="post">
                 @csrf
                 <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_logout_white_default.svg') }}" alt="profile icon">
