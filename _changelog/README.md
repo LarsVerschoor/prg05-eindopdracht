@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 3-11-2024 Zondag
+
+Ik heb vandaag de zoek functionaliteit toegevoegd en ik heb en visibility button voor de admin gemaakt.
+
 ## 31-10-2024 Donderdag
 
 Ik heb vandaag het cars (tag) systeem afgemaakt
