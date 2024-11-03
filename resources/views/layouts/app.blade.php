@@ -36,7 +36,7 @@
                 <div class="nav__title">Create Post</div>
             </a>
 
-            <a class="nav__row" href="">
+            <a class="nav__row" href="{{route('posts.search')}}" {{request()->routeIs('posts.search') ? 'data-current' : ''}}>
                 <img class="nav__icon" src="{{ Vite::asset('resources/images/icon_search_white_default.svg') }}" alt="search icon">
                 <div class="nav__title">Search</div>
             </a>

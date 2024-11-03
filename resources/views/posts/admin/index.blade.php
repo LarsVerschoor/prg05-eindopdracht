@@ -12,6 +12,7 @@
             <th>description</th>
             <th>cars</th>
             <th>likes</th>
+            <th>visibility</th>
         </tr>
 
 
@@ -26,7 +27,14 @@
                 <td>{{$post->description}}</td>
                 <td>{{$post->cars->map(function ($car) {return $car->name;})->join(', ')}}</td>
                 <td>{{count($post->likes)}}</td>
-                <td></td>
+                <td>
+                    <form action="{{route('posts.visibility', $post->id)}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="current-visibility" value="{{$post->visibility}}">
+                        <input type="submit" data-visible="{{$post->visibility}}" class="visibility" value="{{$post->visibility == 1 ? 'Visible' : 'Invisible'}}">
+                    </form>
+                </td>
             </tr>
 
         @endforeach

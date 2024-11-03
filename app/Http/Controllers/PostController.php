@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $posts = Post::with(['user', 'likes', 'cars'])->latest('posts.created_at')->get()->map(function ($post) use ($userId) {
+        $posts = Post::with(['user', 'likes', 'cars'])->latest('posts.created_at')->where('visibility', '1')->get()->map(function ($post) use ($userId) {
             $post->liked = $post->likes->contains('user_id', $userId);
             return $post;
         });
@@ -66,7 +66,7 @@ class PostController extends Controller
      */
     public function show(string $id, Request $request)
     {
-        $post = Post::find($id);
+        $post = Post::where('id', $id)->where('visibility', '1')->first();
         $user_id = $request->user()->id;
 
         if ($post === null) {
@@ -82,7 +82,7 @@ class PostController extends Controller
      */
     public function edit(string $id, Request $request)
     {
-        $post = Post::with('user', 'cars')->find($id);
+        $post = Post::with('user', 'cars')->where('visibility', '1')->find($id);
         if ($post === null) {
             abort(404);
         }
@@ -149,7 +149,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-        if ($post === null) {
+        if ($post === null || $post->visibility !== 1) {
             abort(404);
         }
 
@@ -215,5 +215,18 @@ class PostController extends Controller
         });
 
         return view('posts.admin.index', compact('posts'));
+    }
+
+    public function visibility(Request $request, string $id) {
+        if ($request->user()->role === 0) {
+            abort(403);
+        }
+        $post = Post::find($id);
+        if ($post === null) {
+            abort(404);
+        }
+        $post->visibility = $request['current-visibility'] == 1 ? 0 : 1;
+        $post->save();
+        return redirect()->back();
     }
 }
